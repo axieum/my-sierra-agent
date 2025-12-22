@@ -4,7 +4,7 @@
   "description": "An example Sierra AI voice agent",
   "private": true,
   "type": "module",
-  "main": "agent/index.tsx",
+  "main": "main.js",
   "scripts": {
     "upload": "sierra upload",
     "build": "sierra build",

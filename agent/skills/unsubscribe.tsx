@@ -19,10 +19,10 @@ export function Unsubscribe() {
         }}
         onInput={({ emailAddress }) => setEmailAddress(emailAddress)}
       />
-      <Choose questionPhrasing="Are you sure you want to unsubscribe?">
+      <Choose question="Are you sure you want to unsubscribe?">
         <Option id="yes" description="Yes">
           <Respond mode="paraphrase">
-            We won't send emails to '{emailAddress}' any more.
+            <String>We won't send emails to '{emailAddress}' any more.</String>
           </Respond>
         </Option>
         <Option id="no" description="No">
