@@ -13,4 +13,5 @@ node_modules/
 *.js.map
 content-types.ts
 integrations.json
+integrations-registry.ts
 platform-types.tsx
