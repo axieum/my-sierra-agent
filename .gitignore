@@ -1,0 +1,16 @@
+.vscode/
+coverage/
+dist/
+node_modules/
+.coverage
+.DS_store
+.env*
+!.env.example
+*.tsbuildinfo
+
+.targets/
+*.js
+*.js.map
+content-types.ts
+integrations.json
+platform-types.tsx

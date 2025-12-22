@@ -1,0 +1,13 @@
+// https://typescriptlang.org
+{
+  "extends": "@sierra/agent/tsconfig",
+  "include": [
+    "agent/**/*",
+    "content-schema.ts",
+    "content-types.ts",
+    "integrations-registry.ts",
+    "main.tsx",
+    "platform-types.tsx"
+  ],
+  "exclude": ["agent/**/*.spec.{ts,tsx}", "web/**"]
+}

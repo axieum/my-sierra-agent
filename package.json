@@ -1,0 +1,45 @@
+{
+  "name": "my-sierra-agent",
+  "version": "0.1.0",
+  "description": "An example Sierra AI voice agent",
+  "private": true,
+  "type": "module",
+  "main": "agent/index.tsx",
+  "scripts": {
+    "upload": "sierra upload",
+    "build": "sierra build",
+    "watch": "sierra watch",
+    "check": "sierra check",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "biome check",
+    "fix": "biome check --fix",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@sierra/agent": "https://packages.sierra.ai/agent-0.20251119.7192801.tgz",
+    "@sierra/integrations-builtin": "https://packages.sierra.ai/integrations-builtin-0.20251119.7192801.tgz"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.10",
+    "@sierra/cli": "https://packages.sierra.ai/cli-0.20251119.7192801.tgz",
+    "@sierra/content-schema": "https://packages.sierra.ai/content-schema-0.20251119.7192801.tgz",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "typescript": "5.4.5",
+    "vitest": "^4.0.16"
+  },
+  "sierra": {
+    "integrationPackages": [
+      "@sierra/integrations-builtin/integrations"
+    ]
+  },
+  "lint-staged": {
+    "*": [
+      "biome check --fix --no-errors-on-unmatched --files-ignore-unknown=true"
+    ],
+    "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
+      "sierra check"
+    ]
+  }
+}
