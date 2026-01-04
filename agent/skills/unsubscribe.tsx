@@ -1,34 +1,61 @@
 // biome-ignore lint/correctness/noUnusedImports: JSX required
-import { Choose, Input, InputValidationError, jsx, Option, Respond, useState } from '@sierra/agent';
+import {
+  jsx,
+  Goal,
+  ActionTool,
+  toolParam,
+  addAgentTags,
+  Rule,
+} from '@sierra/agent';
 
-export function Unsubscribe() {
-  const [emailAddress, setEmailAddress] = useState<string | null>(null);
-
+/**
+ * Goal-based unsubscribe skill.
+ *
+ * The agent will help customers unsubscribe from promotional emails.
+ * It uses an ActionTool that the LLM can invoke when the customer
+ * wants to unsubscribe and provides their email address.
+ */
+export function UnsubscribeGoal() {
   return (
-    <>
-      <Input
-        context="We need to unsubscribe the customer from promotional emails"
-        fields={{
-          emailAddress: 'The email address used to create the account',
+    <Goal description="Help the customer unsubscribe from promotional emails">
+      <Rule content="Before unsubscribing, confirm the customer's email address and ask if they are sure they want to unsubscribe." />
+      <Rule content="If the customer provides an invalid email address, politely ask them to provide a valid email." />
+
+      <ActionTool
+        name="UnsubscribeFromEmails"
+        description="Unsubscribe the customer from promotional emails after they confirm they want to unsubscribe"
+        params={{
+          emailAddress: toolParam.string("The customer's email address to unsubscribe"),
+          confirmed: toolParam.boolean('Whether the customer has confirmed they want to unsubscribe'),
         }}
-        validate={({ emailAddress }) => {
-          if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailAddress)) {
-            throw new InputValidationError('Let the customer know that their email is invalid.');
+        func={({ emailAddress, confirmed }) => {
+          // Validate email format
+          const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+          if (!emailRegex.test(emailAddress)) {
+            return {
+              success: false,
+              error: 'Invalid email address format. Please ask the customer for a valid email.',
+            };
           }
-          return { emailAddress };
+
+          // Check if customer confirmed
+          if (!confirmed) {
+            return {
+              success: false,
+              error: 'Customer has not confirmed. Please confirm before unsubscribing.',
+            };
+          }
+
+          // In a real implementation, you would call an API to unsubscribe
+          // For now, we simulate success
+          addAgentTags(['unsubscribe-success', `email:${emailAddress}`]);
+
+          return {
+            success: true,
+            message: `Successfully unsubscribed ${emailAddress} from promotional emails.`,
+          };
         }}
-        onInput={({ emailAddress }) => setEmailAddress(emailAddress)}
       />
-      <Choose question="Are you sure you want to unsubscribe?">
-        <Option id="yes" description="Yes">
-          <Respond mode="paraphrase">
-            <String>We won't send emails to '{emailAddress}' any more.</String>
-          </Respond>
-        </Option>
-        <Option id="no" description="No">
-          <Respond mode="paraphrase">Thank you. Is there anything else I can help you with?</Respond>
-        </Option>
-      </Choose>
-    </>
+    </Goal>
   );
 }
