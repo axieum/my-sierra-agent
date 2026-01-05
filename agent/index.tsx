@@ -13,4 +13,4 @@ import { jsx } from '@sierra/agent';
 //
 // Our custom goals are added via useAdditionalGoalAgentChildren in main.tsx.
 
-export { UnsubscribeGoal } from './skills/unsubscribe';
+export { UnsubscribeGoal } from './goals/unsubscribe';

@@ -1,6 +1,9 @@
 // https://biomejs.dev
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "includes": ["**", "!integrations-registry.ts"]
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",

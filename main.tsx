@@ -1,12 +1,15 @@
-import { addAgentTags, jsx, Respond, CompatibilityDate } from '@sierra/agent';
+// biome-ignore lint/correctness/noUnusedImports: JSX required
+import { addAgentTags, CompatibilityDate, jsx } from '@sierra/agent';
 import { createAgent } from '@sierra/agent/base';
-import { UnsubscribeGoal } from './agent/skills/unsubscribe';
+import { UnsubscribeGoal } from './agent';
 import integrationsRegistry from './integrations-registry';
 
 // Goal-based agent using the Sierra Base Agent
 export default createAgent({
+  // Set agent compatibility
   compatibilityDate: CompatibilityDate.STABLE,
 
+  // Configure the agent
   config: {
     textConfig: {
       enabledEvents: ['start', 'inactivity'],
@@ -14,7 +17,7 @@ export default createAgent({
     },
   },
 
-  // Add our custom goals to the GoalAgent
+  // Add goals
   useAdditionalGoalAgentChildren: () => {
     return <UnsubscribeGoal />;
   },
@@ -25,7 +28,6 @@ export default createAgent({
     switch (event.type) {
       case 'start':
         addAgentTags(['conversation-start']);
-        // Let the base agent handle the start event
         next(props);
         break;
       case 'request-complete':
@@ -45,9 +47,8 @@ export default createAgent({
   },
 
   // Enable abuse detection
-  useCustomAbuseDetectionProps: () => ({
-    mode: 'defend',
-  }),
+  useCustomAbuseDetectionProps: () => ({ mode: 'defend' }),
 
+  // Provide integrations
   integrationsRegistry,
 });

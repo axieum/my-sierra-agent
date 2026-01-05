@@ -1,12 +1,5 @@
 // biome-ignore lint/correctness/noUnusedImports: JSX required
-import {
-  jsx,
-  Goal,
-  ActionTool,
-  toolParam,
-  addAgentTags,
-  Rule,
-} from '@sierra/agent';
+import { ActionTool, addAgentTags, Goal, jsx, Rule, toolParam } from '@sierra/agent';
 
 /**
  * Goal-based unsubscribe skill.
