@@ -1,6 +1,6 @@
 // https://typescriptlang.org
 {
-  "extends": "@sierra/agent/tsconfig",
+  "extends": "@sierra/agent/tsconfig.json",
   "include": [
     "agent/**/*",
     "content-schema.ts",

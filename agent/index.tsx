@@ -1,29 +1,16 @@
 // biome-ignore lint/correctness/noUnusedImports: JSX required
-import { Category, jsx, RedirectToAvailableTopics, Topic, Triage } from '@sierra/agent';
-import { Unsubscribe } from './skills/unsubscribe';
+import { jsx } from '@sierra/agent';
 
-export function Agent() {
-  return (
-    <Triage otherwise={<DefaultResponse />}>
-      <Category
-        descriptions={[
-          'Unsubscribe from emails',
-          'Unsubscribe from promotional emails',
-          'Stop marketing emails',
-          'Remove me from your mailing list',
-          'I want to stop getting emails',
-        ]}
-      >
-        <Unsubscribe />
-      </Category>
-    </Triage>
-  );
-}
+// This file is no longer needed since we're using the goal-based pattern
+// with useAdditionalGoalAgentChildren in main.tsx.
+//
+// The Base Agent from @sierra/agent/base provides:
+// - GoalAgent with transfer tool
+// - DetectAbuse
+// - KnowledgeSearch (if knowledge sources are configured)
+// - NoCodeJourneys support
+// - Voice handling
+//
+// Our custom goals are added via useAdditionalGoalAgentChildren in main.tsx.
 
-export function DefaultResponse() {
-  return (
-    <RedirectToAvailableTopics>
-      <Topic>Unsubscribe from emails</Topic>
-    </RedirectToAvailableTopics>
-  );
-}
+export { UnsubscribeGoal } from './skills/unsubscribe';
